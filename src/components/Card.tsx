@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronUp, Heart } from "lucide-react";
+import { ChevronUp, ChevronLeft, Heart } from "lucide-react";
 import type { Card as CardType } from "@/types/card";
 import { CATEGORY_COLORS } from "@/types/card";
 import { useSwipeCard } from "@/hooks/useSwipeCard";
@@ -12,9 +12,18 @@ interface CardProps {
   onAdvance: () => void;
   onSaved: () => void;
   showNextSkeleton?: boolean;
+  onPrevious: () => void;
+  canGoPrevious: boolean;
 }
 
-export default function Card({ card, onAdvance, onSaved, showNextSkeleton }: CardProps) {
+export default function Card({
+  card,
+  onAdvance,
+  onSaved,
+  showNextSkeleton,
+  onPrevious,
+  canGoPrevious,
+}: CardProps) {
   const saveCard = useStore((s) => s.saveCard);
 
   const { bind, transform, isDragging, showKeepHint, showNextHint, triggerNext, triggerSave } =
@@ -76,7 +85,16 @@ export default function Card({ card, onAdvance, onSaved, showNextSkeleton }: Car
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-10 shrink-0 pb-1">
+      <div className="flex items-center justify-center gap-8 shrink-0 pb-1">
+        <button
+          onClick={onPrevious}
+          disabled={!canGoPrevious}
+          aria-label="Fiche précédente"
+          className="w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-transform disabled:opacity-0 disabled:pointer-events-none"
+          style={{ border: "1px solid #F6F3EA33" }}
+        >
+          <ChevronLeft size={17} color="#F6F3EA99" />
+        </button>
         <button
           onClick={triggerSave}
           aria-label="Sauvegarder"

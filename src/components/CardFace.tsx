@@ -16,11 +16,17 @@ export default function CardFace({ card, center = true }: { card: CardType; cent
         {card.categorie}
       </span>
 
-      <h2 className="font-display text-[30px] font-bold leading-tight mb-5" style={{ color: "#F6F3EA" }}>
+      <h2 className="font-display text-[30px] font-bold leading-tight mb-1" style={{ color: "#F6F3EA" }}>
         {card.titre}
       </h2>
 
-      <div className="mb-6 pl-4" style={{ borderLeft: `3px solid ${color.bg}` }}>
+      {card.signification && (
+        <p className="text-[12px] font-mono mb-4" style={{ color: "#F6F3EA66" }}>
+          {card.signification}
+        </p>
+      )}
+
+      <div className={`pl-4 mb-6 ${card.signification ? "" : "mt-3"}`} style={{ borderLeft: `3px solid ${color.bg}` }}>
         <p className="text-[16.5px] leading-snug font-medium" style={{ color: "#F6F3EA" }}>
           {card.tldr}
         </p>
@@ -29,18 +35,23 @@ export default function CardFace({ card, center = true }: { card: CardType; cent
       <IconField icon={Lightbulb} text={card.analogie} />
       <IconField icon={Target} text={card.cas_usage} />
 
-      <div className="rounded-xl overflow-hidden mt-2" style={{ background: "#0D0E12" }}>
-        <div className="flex items-center gap-1.5 px-3 py-2" style={{ background: "#16171D" }}>
-          <span className="w-2 h-2 rounded-full" style={{ background: "#E8483A55" }} />
-          <span className="w-2 h-2 rounded-full" style={{ background: "#F0A63B55" }} />
-          <span className="w-2 h-2 rounded-full" style={{ background: "#C3F53B55" }} />
-        </div>
-        <pre
-          className="px-3.5 py-3 text-[12px] whitespace-pre-wrap leading-relaxed overflow-x-auto"
-          style={{ fontFamily: "'JetBrains Mono',monospace", color: "#C3F53B" }}
-        >
-          {card.exemple_code}
-        </pre>
+      <div className="mt-2">
+        <span className="font-mono text-[10px] tracking-widest block mb-3" style={{ color: "#F6F3EA55" }}>
+          SCHÉMA
+        </span>
+        {card.schema.map((step, i) => (
+          <div key={i} className="flex gap-3">
+            <div className="flex flex-col items-center">
+              <span className="w-2 h-2 rounded-full shrink-0" style={{ background: color.bg }} />
+              {i < card.schema.length - 1 && (
+                <span className="w-px flex-1 min-h-4" style={{ background: "#F6F3EA22" }} />
+              )}
+            </div>
+            <p className="text-[13.5px] pb-4 -mt-1" style={{ color: "#DDD9CE" }}>
+              {step}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

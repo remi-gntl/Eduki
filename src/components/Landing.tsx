@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CATEGORY_COLORS } from "@/types/card";
 
-export default function Landing({ onStart, isReady }: { onStart: () => void; isReady: boolean }) {
+export default function Landing({ onStart }: { onStart: () => void }) {
   return (
     <div className="h-full flex flex-col px-6 pt-8 pb-8 overflow-y-auto">
       <div className="flex items-center justify-between mb-10">
@@ -63,18 +63,8 @@ export default function Landing({ onStart, isReady }: { onStart: () => void; isR
       >
         Commencer <ArrowRight size={16} />
       </button>
-      <p
-        className="text-center font-mono text-[10px] mb-8 flex items-center justify-center gap-1.5"
-        style={{ color: "#F6F3EA55" }}
-      >
-        {isReady ? (
-          "Aucun compte. Aucune app à installer."
-        ) : (
-          <>
-            <Loader2 size={11} className="animate-spin" />
-            Préparation de tes premières fiches…
-          </>
-        )}
+      <p className="text-center font-mono text-[10px] mb-8" style={{ color: "#F6F3EA55" }}>
+        Aucun compte. Aucune app à installer.
       </p>
 
       <div className="mt-auto">
@@ -100,7 +90,7 @@ export default function Landing({ onStart, isReady }: { onStart: () => void; isR
       </div>
 
       <p className="font-mono text-[10px] text-center mt-6" style={{ color: "#F6F3EA33" }}>
-        eduki — du Pays basque au terminal
+        eduki — Fait par Rémi Gentil
       </p>
     </div>
   );

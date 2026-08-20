@@ -10,11 +10,21 @@ interface CardStackProps {
   cards: CardType[];
   index: number;
   onAdvance: () => void;
+  onPrevious: () => void;
   onBack: () => void;
   onOpenFavorites: () => void;
+  pendingMessage: string | null;
 }
 
-export default function CardStack({ cards, index, onAdvance, onBack, onOpenFavorites }: CardStackProps) {
+export default function CardStack({
+  cards,
+  index,
+  onAdvance,
+  onPrevious,
+  onBack,
+  onOpenFavorites,
+  pendingMessage,
+}: CardStackProps) {
   const [toast, setToast] = useState<string | null>(null);
   const savedCount = useStore((s) => s.savedCards.length);
 
@@ -22,6 +32,8 @@ export default function CardStack({ cards, index, onAdvance, onBack, onOpenFavor
     setToast(msg);
     setTimeout(() => setToast(null), 1600);
   }
+
+  const message = toast ?? pendingMessage;
 
   const current = cards[index];
   const hasNextLoaded = index + 1 < cards.length;
@@ -52,24 +64,25 @@ export default function CardStack({ cards, index, onAdvance, onBack, onOpenFavor
             card={current}
             showNextSkeleton={!hasNextLoaded}
             onAdvance={onAdvance}
+            onPrevious={onPrevious}
+            canGoPrevious={index > 0}
             onSaved={() => showToast("Ajouté aux favoris")}
           />
         )}
       </div>
 
-      {toast && (
+      {message && (
         <div
           className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full font-mono text-[12px]"
           style={{ background: "#C3F53B", color: "#1E2B00" }}
         >
-          {toast}
+          {message}
         </div>
       )}
     </div>
   );
 }
 
-// Affiché quand scroll plus rapide que génération, on load avant d'afficher la carte 
 function SkeletonCard() {
   return (
     <div

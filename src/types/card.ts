@@ -4,10 +4,11 @@ export interface Card {
   id: string;
   categorie: Categorie;
   titre: string;
+  signification?: string;
   tldr: string;
   analogie: string;
   cas_usage: string;
-  exemple_code: string;
+  schema: string[];
 }
 
 export const CATEGORY_COLORS: Record<Categorie, { bg: string; text: string }> = {
